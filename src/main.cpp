@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
 
         Shader shader;
         shader.attach("main.vert")
-            .attach("mandelbrot.frag")
+            .attach("julia.frag")
             .link()
             .activate();
         int uniformLocation = glGetUniformLocation(shader.get(), "scale");
