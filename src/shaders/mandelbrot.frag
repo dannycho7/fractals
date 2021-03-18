@@ -10,11 +10,11 @@ out vec4 fragColor;
 float mandelbrot(vec2 coords) {
 	vec2 z = vec2(0, 0);
 	for (int i = 0; i < MAX_ITER; ++i) {
-        float x = (z.x * z.x - z.y * z.y) + coords.x;
-        float y = (z.y * z.x + z.x * z.y) + coords.y;
-        z.x = x;
-        z.y = y;
-        if (length(z) > 2) {
+		float x = (z.x * z.x - z.y * z.y) + coords.x;
+		float y = (z.y * z.x + z.x * z.y) + coords.y;
+		z.x = x;
+		z.y = y;
+		if (length(z) > 2) {
 			return float(i) / MAX_ITER;
 		}
 	}

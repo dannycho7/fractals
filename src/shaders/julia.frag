@@ -54,16 +54,16 @@ void main() {
         vec3(-0.7629f, 0.1889f, 100)
     );
 
-	// offsetting by 0.5 more in the x loads the more standard photo of a mandelbrot
-	vec2 coords_01 = gl_FragCoord.xy/1080;
+    // partition the board into 4 pieces and load each c value
+    vec2 coords_01 = gl_FragCoord.xy/1080;
     int offset = 0;
     if (coords_01.y > 0.5f) {
         offset += 2;
     }
-    // partition the board into 4 pieces and load each c value
     int i = int(ceil(coords_01.x * 2) - 1) + offset;
     vec2 coords_p_01 = mod(vec2(2 * coords_01.x, 2 * coords_01.y), 1);
     vec2 coords = 2 * coords_p_01 - vec2(1.0f, 1.0f);
+
 	float a = julia(coords, julias[i]);
 	fragColor = vec4(colorFunc(a), 1.0f);
 }
