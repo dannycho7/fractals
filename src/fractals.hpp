@@ -18,7 +18,19 @@
 #include <stb_image.h>
 
 // Define Some Constants
-const int mWidth = 1280;
-const int mHeight = 800;
+const int mWidth = 1080;
+const int mHeight = 1080;
+
+const float rect_verts[] = {
+    -1.0f, -1.0f, 0.0f,
+    1.0f, 1.0f, 0.0f,
+    -1.0f, 1.0f, -0.0f,
+    1.0f, -1.0f, 0.0f
+};
+
+const unsigned int tri_indices[] = {
+    0, 1, 2,
+    0, 3, 1
+};
 
 #endif //~ Fractals Header
