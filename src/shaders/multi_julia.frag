@@ -1,6 +1,7 @@
 #version 330 core
 
 in vec4 gl_FragCoord;
+uniform float scale;
  
 out vec4 fragColor;
 
@@ -21,7 +22,7 @@ vec2 f(vec2 z, vec2 c, int n) {
 
 float multi_julia(vec2 coords, vec3 julia) {
     // allows sets to fit within box by setting a "padding" via out of bounds values in [-1, 1] range.
-    vec2 z = 1.5 * coords;
+    vec2 z = 1.5 * coords / scale;
     vec2 c = julia.xy;
     int max_iter = int(julia.z);
 	for (int i = 0; i < max_iter; ++i) {
@@ -50,8 +51,7 @@ vec3 colorFunc(float a) {
 }
 
 void main() {
-	// offsetting by 0.5 more in the x loads the more standard photo of a mandelbrot
 	vec2 coords = gl_FragCoord.xy/540 - vec2(1.0f, 1.0f);
-	float a = multi_julia(coords, vec3(0.6f, 0.55f, 200));
+	float a = multi_julia(coords, vec3(0.6f, 0.55f, 150));
 	fragColor = vec4(colorFunc(a), 1.0f);
 }

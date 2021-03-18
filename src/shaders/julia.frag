@@ -1,13 +1,14 @@
 #version 330 core
 
 in vec4 gl_FragCoord;
- 
+uniform float scale;
+
 out vec4 fragColor;
 
 // Assume c consists of the real number (x) and imaginary number (y)
 float julia(vec2 coords, vec3 julia) {
     // allows sets to fit within box by setting a "padding" via out of bounds values in [-1, 1] range.
-    vec2 z = 1.5 * coords;
+    vec2 z = 1.5 * coords / scale;
     vec2 c = julia.xy;
     int max_iter = int(julia.z);
 	for (int i = 0; i < max_iter; ++i) {

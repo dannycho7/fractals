@@ -7,8 +7,20 @@
 #include <glad/glad.h>
 
 // Standard Headers
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
+
+#include <iostream>
+
+double g_Scale           = 1.0f;
+float g_MouseWheelScale = 0.1f;
+
+void ScrollCallback( GLFWwindow* window, double x, double y) {
+    g_Scale += g_MouseWheelScale * y;
+    g_Scale = std::max(0.0, g_Scale);
+    std::cout << "New Scale: " << g_Scale << std::endl;
+}
 
 int main(int argc, char* argv[]) {
     // Load GLFW and Create a Window
@@ -55,6 +67,8 @@ int main(int argc, char* argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    glfwSetScrollCallback(mWindow, ScrollCallback);
+
     // Rendering Loop
     while (glfwWindowShouldClose(mWindow) == false) {
         if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -65,7 +79,16 @@ int main(int argc, char* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         Shader shader;
-        shader.attach("main.vert").attach("multi_julia.frag").link().activate();
+        shader.attach("main.vert")
+            .attach("mandelbrot.frag")
+            .link()
+            .activate();
+        int uniformLocation = glGetUniformLocation(shader.get(), "scale");
+        if (uniformLocation < 0) {
+            std::cout << "Couldn't get uniform location for scale" << std::endl;
+            break;
+        }
+        shader.bind(uniformLocation, g_Scale);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

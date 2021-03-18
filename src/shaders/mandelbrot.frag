@@ -1,7 +1,7 @@
 #version 330 core
 
 in vec4 gl_FragCoord;
- 
+uniform float scale;
 out vec4 fragColor;
 
 #define MAX_ITER 100
@@ -24,6 +24,6 @@ float mandelbrot(vec2 coords) {
 void main() {
 	// offsetting by 0.5 more in the x loads the more standard photo of a mandelbrot
 	vec2 coords = gl_FragCoord.xy/540 - vec2(1.5f, 1.0f);
-	float a = mandelbrot(coords);
+	float a = mandelbrot(coords / scale);
 	fragColor = vec4(a, a, a, 1.0f);
 }
