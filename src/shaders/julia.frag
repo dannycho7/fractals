@@ -5,6 +5,15 @@ uniform float scale;
 
 out vec4 fragColor;
 
+vec2 z_m(vec2 z1, vec2 z2) {
+    return vec2(z1.x * z2.x - z1.y * z2.y, z1.x * z2.y + z2.x * z1.y);
+}
+
+// julia eq: f(z) = z^2 + c
+vec2 f(vec2 z, vec2 c) {
+    return z_m(z, z) + c;
+}
+
 // Assume c consists of the real number (x) and imaginary number (y)
 float julia(vec2 coords, vec3 julia) {
     // allows sets to fit within box by setting a "padding" via out of bounds values in [-1, 1] range.
@@ -12,10 +21,7 @@ float julia(vec2 coords, vec3 julia) {
     vec2 c = julia.xy;
     int max_iter = int(julia.z);
 	for (int i = 0; i < max_iter; ++i) {
-        float x = (z.x * z.x - z.y * z.y) + c.x;
-        float y = (z.y * z.x + z.x * z.y) + c.y;
-        z.x = x;
-        z.y = y;
+        z = f(z, c);
         if (length(z) > 2) {
 			return float(i) / max_iter;
 		}
