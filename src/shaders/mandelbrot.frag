@@ -22,7 +22,8 @@ float mandelbrot(vec2 coords) {
 }
 
 void main() {
-	vec2 coords = gl_FragCoord.xy/540 - vec2(1.0f, 1.0f);
+	// offsetting by 0.5 more in the x loads the more standard photo of a mandelbrot
+	vec2 coords = gl_FragCoord.xy/540 - vec2(1.5f, 1.0f);
 	float a = mandelbrot(coords);
 	fragColor = vec4(a, a, a, 1.0f);
 }
