@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         Shader shader;
-        shader.attach("main.vert").attach("mandelbrot.frag").link().activate();
+        shader.attach("main.vert").attach("julia.frag").link().activate();
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
